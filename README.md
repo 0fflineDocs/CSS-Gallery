@@ -2,7 +2,7 @@
 
 A modern CSS gallery built with Next.js, React, and Tailwind CSS. This visually appealing gallery should be used as a reference for CSS techniques and design inspiration. It features a clean and responsive layout, smooth animations, and a curated collection of CSS examples.
 
----
+<img width="1471" height="963" alt="image" src="https://github.com/user-attachments/assets/a9cd4c80-0ba8-4937-9f09-dcb1ec5e66c8" />
 
 ## Tech Stack
 
