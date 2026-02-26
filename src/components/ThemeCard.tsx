@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import type { ThemePreset } from '../types/theme';
 import { ThemePreview } from './ThemePreview';
 
@@ -22,27 +23,29 @@ export function ThemeCard({ theme, index }: ThemeCardProps) {
       }}
       className="flex flex-col w-full max-w-[360px]"
     >
-      {/* Window */}
-      <div
-        className="overflow-hidden rounded-2xl border border-white/[0.06] hover:border-white/[0.12] transition-colors duration-200"
-      >
-        {/* Chrome bar */}
+      <Link to={`/theme/${theme.id}`} className="no-underline">
+        {/* Window */}
         <div
-          className="flex items-center justify-center px-4"
-          style={{
-            height: 36,
-            backgroundColor: theme.colors.muted,
-            borderBottom: `1px solid ${theme.colors.border}`,
-          }}
+          className="overflow-hidden rounded-2xl border border-white/[0.06] hover:border-white/[0.12] transition-colors duration-200"
         >
-          <span className="text-[12px] font-medium text-slate-400">
-            {theme.name}
-          </span>
-        </div>
+          {/* Chrome bar */}
+          <div
+            className="flex items-center justify-center px-4"
+            style={{
+              height: 36,
+              backgroundColor: theme.colors.muted,
+              borderBottom: `1px solid ${theme.colors.border}`,
+            }}
+          >
+            <span className="text-[12px] font-medium text-slate-400">
+              {theme.name}
+            </span>
+          </div>
 
-        {/* Preview content */}
-        <ThemePreview theme={theme} />
-      </div>
+          {/* Preview content */}
+          <ThemePreview theme={theme} />
+        </div>
+      </Link>
     </motion.article>
   );
 }
