@@ -66,6 +66,24 @@ function Section({ title, theme, children }: { title: string; theme: ThemePreset
   );
 }
 
+function Subheading({ theme, children }: { theme: ThemePreset; children: React.ReactNode }) {
+  return (
+    <h3
+      style={{
+        fontFamily: `'${theme.fonts.body}', sans-serif`,
+        fontSize: 12,
+        fontWeight: 600,
+        color: theme.colors.secondary,
+        textTransform: 'uppercase',
+        letterSpacing: '0.08em',
+        marginBottom: 16,
+      }}
+    >
+      {children}
+    </h3>
+  );
+}
+
 // ── Color Palette ────────────────────────────────────────────────────
 function ColorPalette({ theme }: { theme: ThemePreset }) {
   const { copiedValue, copy } = useCopyToClipboard();
@@ -868,6 +886,598 @@ function GradientsEffects({ theme }: { theme: ThemePreset }) {
   );
 }
 
+function VisualShowcase({ theme }: { theme: ThemePreset }) {
+  const meters = [
+    { label: 'Color balance', value: 87, color: theme.colors.primary },
+    { label: 'Readability', value: 82, color: theme.colors.accent },
+    { label: 'Depth', value: 68, color: theme.colors.secondary },
+  ];
+
+  const tableRows = [
+    { id: 'ID1', primary: 5, accent: 6, muted: 10 },
+    { id: 'ID2', primary: 7, accent: 1, muted: 13 },
+    { id: 'ID3', primary: 3, accent: 2, muted: 2 },
+  ];
+
+  const totals = tableRows.reduce(
+    (acc, row) => ({
+      primary: acc.primary + row.primary,
+      accent: acc.accent + row.accent,
+      muted: acc.muted + row.muted,
+    }),
+    { primary: 0, accent: 0, muted: 0 }
+  );
+
+  return (
+    <Section title="Visuals" theme={theme}>
+      <Subheading theme={theme}>Colored Meters</Subheading>
+      <div style={{ display: 'grid', gap: 12, marginBottom: 32, maxWidth: 580 }}>
+        {meters.map((meter) => (
+          <div key={meter.label} style={{ display: 'grid', gridTemplateColumns: '110px 1fr auto', gap: 12, alignItems: 'center' }}>
+            <span style={{ fontSize: 12, color: theme.colors.secondary, fontFamily: `'${theme.fonts.body}', sans-serif` }}>{meter.label}</span>
+            <div
+              style={{
+                height: 10,
+                borderRadius: 9999,
+                backgroundColor: `${theme.colors.border}90`,
+                overflow: 'hidden',
+              }}
+            >
+              <div
+                style={{
+                  width: `${meter.value}%`,
+                  height: '100%',
+                  borderRadius: 9999,
+                  background: `linear-gradient(90deg, ${meter.color}, ${theme.colors.accent})`,
+                  boxShadow: `0 0 12px ${meter.color}40`,
+                }}
+              />
+            </div>
+            <span style={{ fontSize: 12, fontWeight: 600, color: theme.colors.foreground, fontFamily: 'monospace' }}>{meter.value}%</span>
+          </div>
+        ))}
+      </div>
+
+      <Subheading theme={theme}>Charts</Subheading>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, marginBottom: 32 }}>
+        <div
+          style={{
+            padding: 18,
+            borderRadius: theme.borderRadius,
+            backgroundColor: theme.colors.muted,
+            border: `1px solid ${theme.colors.border}`,
+          }}
+        >
+          <div style={{ fontSize: 12, color: theme.colors.secondary, marginBottom: 14 }}>Donut metric</div>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 14 }}>
+            <div
+              style={{
+                width: 120,
+                height: 120,
+                borderRadius: '50%',
+                display: 'grid',
+                placeItems: 'center',
+                background: `conic-gradient(${theme.colors.primary} 0 62%, ${theme.colors.accent} 62% 87%, ${theme.colors.border} 87% 100%)`,
+              }}
+            >
+              <div
+                style={{
+                  width: 78,
+                  height: 78,
+                  borderRadius: '50%',
+                  backgroundColor: theme.colors.background,
+                  display: 'grid',
+                  placeItems: 'center',
+                  color: theme.colors.foreground,
+                  fontFamily: `'${theme.fonts.heading}', sans-serif`,
+                  fontWeight: 700,
+                }}
+              >
+                87%
+              </div>
+            </div>
+          </div>
+          <div style={{ fontSize: 12, lineHeight: 1.6, color: theme.colors.secondary }}>Coverage mix for the {theme.name} palette system.</div>
+        </div>
+
+        <div
+          style={{
+            padding: 18,
+            borderRadius: theme.borderRadius,
+            backgroundColor: theme.colors.muted,
+            border: `1px solid ${theme.colors.border}`,
+          }}
+        >
+          <div style={{ fontSize: 12, color: theme.colors.secondary, marginBottom: 14 }}>Pie chart</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <div
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: '50%',
+                background: `conic-gradient(${theme.colors.primary} 0 38%, ${theme.colors.accent} 38% 67%, ${theme.colors.secondary} 67% 100%)`,
+                flexShrink: 0,
+              }}
+            />
+            <div style={{ display: 'grid', gap: 8 }}>
+              {[
+                { label: 'Primary', color: theme.colors.primary },
+                { label: 'Accent', color: theme.colors.accent },
+                { label: 'Secondary', color: theme.colors.secondary },
+              ].map((item) => (
+                <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: item.color }} />
+                  <span style={{ fontSize: 12, color: theme.colors.foreground }}>{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            padding: 18,
+            borderRadius: theme.borderRadius,
+            backgroundColor: theme.colors.muted,
+            border: `1px solid ${theme.colors.border}`,
+          }}
+        >
+          <div style={{ fontSize: 12, color: theme.colors.secondary, marginBottom: 14 }}>Bar chart</div>
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, height: 120 }}>
+            {[
+              { label: 'Mon', height: 54, color: theme.colors.secondary },
+              { label: 'Tue', height: 82, color: theme.colors.primary },
+              { label: 'Wed', height: 66, color: theme.colors.accent },
+              { label: 'Thu', height: 92, color: theme.colors.foreground },
+            ].map((bar) => (
+              <div key={bar.label} style={{ display: 'grid', justifyItems: 'center', gap: 8, flex: 1 }}>
+                <div style={{ width: '100%', height: bar.height, borderRadius: '8px 8px 0 0', background: `linear-gradient(180deg, ${bar.color}, ${bar.color}80)` }} />
+                <span style={{ fontSize: 11, color: theme.colors.secondary, fontFamily: 'monospace' }}>{bar.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+
+      <Subheading theme={theme}>Table + Logs</Subheading>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+        <div
+          style={{
+            padding: 18,
+            borderRadius: theme.borderRadius,
+            backgroundColor: theme.colors.muted,
+            border: `1px solid ${theme.colors.border}`,
+          }}
+        >
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+            <thead>
+              <tr style={{ color: theme.colors.secondary, textAlign: 'left' }}>
+                <th style={{ paddingBottom: 10 }}>ID</th>
+                <th style={{ paddingBottom: 10 }}>P1</th>
+                <th style={{ paddingBottom: 10 }}>P2</th>
+                <th style={{ paddingBottom: 10 }}>P3</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableRows.map((row) => (
+                <tr key={row.id} style={{ borderTop: `1px solid ${theme.colors.border}` }}>
+                  <td style={{ padding: '10px 0', color: theme.colors.foreground }}>{row.id}</td>
+                  <td style={{ color: theme.colors.secondary }}>{row.primary}</td>
+                  <td style={{ color: theme.colors.secondary }}>{row.accent}</td>
+                  <td style={{ color: theme.colors.secondary }}>{row.muted}</td>
+                </tr>
+              ))}
+              <tr style={{ borderTop: `1px solid ${theme.colors.border}`, fontWeight: 700 }}>
+                <td style={{ paddingTop: 10, color: theme.colors.foreground }}>Total</td>
+                <td style={{ paddingTop: 10, color: theme.colors.primary }}>{totals.primary}</td>
+                <td style={{ paddingTop: 10, color: theme.colors.accent }}>{totals.accent}</td>
+                <td style={{ paddingTop: 10, color: theme.colors.foreground }}>{totals.muted}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          style={{
+            padding: 18,
+            borderRadius: theme.borderRadius,
+            backgroundColor: theme.colors.background,
+            border: `1px solid ${theme.colors.border}`,
+            fontFamily: 'monospace',
+            fontSize: 12,
+          }}
+        >
+          <div style={{ color: theme.colors.secondary, marginBottom: 10 }}>SYSTEM LOG</div>
+          <div style={{ color: theme.colors.foreground, marginBottom: 8 }}>syncing {theme.id} palette...</div>
+          <div style={{ color: theme.colors.accent, marginBottom: 8 }}>+ gradient cards enabled</div>
+          <div style={{ color: '#4ade80', marginBottom: 8 }}>+ counters calibrated</div>
+          <div style={{ color: theme.colors.secondary }}>
+            ready <span style={{ animation: 'blink 1.1s step-end infinite' }}>_</span>
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+function ModernWebEssentials({ theme }: { theme: ThemePreset }) {
+  const alerts = [
+    { label: 'Success', title: 'Palette saved', text: `${theme.name} tokens were copied.`, color: '#4ade80', bg: '#4ade8018' },
+    { label: 'Info', title: 'Draft updated', text: 'Counters and charts are now live.', color: theme.colors.primary, bg: `${theme.colors.primary}18` },
+    { label: 'Warning', title: 'Contrast check', text: 'Secondary text is display-only.', color: '#fbbf24', bg: '#fbbf2418' },
+  ];
+
+  return (
+    <Section title="Modern Web Essentials" theme={theme}>
+      <Subheading theme={theme}>Alerts & Toast</Subheading>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16, marginBottom: 32 }}>
+        <div style={{ display: 'grid', gap: 10 }}>
+          {alerts.map((alert) => (
+            <div
+              key={alert.label}
+              style={{
+                display: 'flex',
+                gap: 12,
+                alignItems: 'flex-start',
+                padding: '12px 14px',
+                borderRadius: theme.borderRadius,
+                border: `1px solid ${theme.colors.border}`,
+                backgroundColor: alert.bg,
+              }}
+            >
+              <span style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: alert.color, marginTop: 4, flexShrink: 0 }} />
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: theme.colors.foreground }}>{alert.title}</div>
+                <div style={{ fontSize: 12, color: theme.colors.secondary, marginTop: 2 }}>{alert.text}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div
+          style={{
+            alignSelf: 'start',
+            padding: '14px 16px',
+            borderRadius: theme.borderRadius,
+            background: `linear-gradient(135deg, ${theme.colors.primary}1f, ${theme.colors.background})`,
+            border: `1px solid ${theme.colors.border}`,
+            boxShadow: theme.shadow,
+          }}
+        >
+          <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', color: theme.colors.secondary, marginBottom: 6 }}>Toast</div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: theme.colors.foreground }}>Theme preview saved</div>
+          <div style={{ fontSize: 12, color: theme.colors.secondary, marginTop: 4 }}>Just now · synced across devices</div>
+        </div>
+      </div>
+
+      <Subheading theme={theme}>Tabs, Toggle & Avatars</Subheading>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16, marginBottom: 32 }}>
+        <div
+          style={{
+            padding: 18,
+            borderRadius: theme.borderRadius,
+            backgroundColor: theme.colors.muted,
+            border: `1px solid ${theme.colors.border}`,
+          }}
+        >
+          <div
+            style={{
+              display: 'inline-flex',
+              gap: 6,
+              padding: 4,
+              backgroundColor: theme.colors.background,
+              borderRadius: 9999,
+              marginBottom: 14,
+            }}
+          >
+            {['Overview', 'Analytics', 'Tokens'].map((tab, index) => (
+              <span
+                key={tab}
+                style={{
+                  padding: '6px 12px',
+                  borderRadius: 9999,
+                  backgroundColor: index === 0 ? theme.colors.primary : 'transparent',
+                  color: index === 0 ? theme.colors.background : theme.colors.secondary,
+                  fontSize: 12,
+                  fontWeight: 600,
+                }}
+              >
+                {tab}
+              </span>
+            ))}
+          </div>
+          <div style={{ fontSize: 13, color: theme.colors.foreground, marginBottom: 6 }}>Editorial system overview</div>
+          <div style={{ fontSize: 12, color: theme.colors.secondary, lineHeight: 1.6 }}>
+            Tabs are great for dashboard layouts, settings panels, and analytics views.
+          </div>
+        </div>
+
+        <div
+          style={{
+            padding: 18,
+            borderRadius: theme.borderRadius,
+            backgroundColor: theme.colors.muted,
+            border: `1px solid ${theme.colors.border}`,
+            display: 'grid',
+            gap: 14,
+          }}
+        >
+          {[
+            { label: 'Auto-save presets', enabled: true },
+            { label: 'Reduced motion', enabled: false },
+          ].map((item) => (
+            <div key={item.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
+              <span style={{ fontSize: 13, color: theme.colors.foreground }}>{item.label}</span>
+              <span
+                style={{
+                  width: 42,
+                  height: 24,
+                  borderRadius: 9999,
+                  backgroundColor: item.enabled ? theme.colors.primary : theme.colors.background,
+                  border: `1px solid ${item.enabled ? theme.colors.primary : theme.colors.border}`,
+                  position: 'relative',
+                  display: 'inline-block',
+                }}
+              >
+                <span
+                  style={{
+                    position: 'absolute',
+                    top: 2,
+                    left: item.enabled ? 20 : 2,
+                    width: 18,
+                    height: 18,
+                    borderRadius: '50%',
+                    backgroundColor: item.enabled ? theme.colors.background : theme.colors.secondary,
+                    transition: 'left 0.2s ease',
+                  }}
+                />
+              </span>
+            </div>
+          ))}
+
+          <div style={{ marginTop: 4 }}>
+            <div style={{ fontSize: 11, color: theme.colors.secondary, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>Avatar group</div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {['WS', 'UI', 'UX'].map((initials, index) => (
+                <div
+                  key={initials}
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: '50%',
+                    marginLeft: index === 0 ? 0 : -8,
+                    border: `2px solid ${theme.colors.background}`,
+                    backgroundColor: [theme.colors.primary, theme.colors.accent, theme.colors.secondary][index],
+                    color: theme.colors.background,
+                    display: 'grid',
+                    placeItems: 'center',
+                    fontSize: 11,
+                    fontWeight: 700,
+                  }}
+                >
+                  {initials}
+                </div>
+              ))}
+              <span style={{ marginLeft: 10, fontSize: 12, color: theme.colors.secondary }}>+4 collaborators</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <Subheading theme={theme}>Skeleton Loading & Empty State</Subheading>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+        <div
+          style={{
+            padding: 18,
+            borderRadius: theme.borderRadius,
+            backgroundColor: theme.colors.muted,
+            border: `1px solid ${theme.colors.border}`,
+          }}
+        >
+          {[70, 100, 88, 54].map((width, index) => (
+            <div
+              key={index}
+              style={{
+                height: index === 0 ? 18 : 10,
+                width: `${width}%`,
+                borderRadius: 9999,
+                marginBottom: 10,
+                background: `linear-gradient(90deg, ${theme.colors.border}, ${theme.colors.foreground}18, ${theme.colors.border})`,
+                backgroundSize: '200% 100%',
+                animation: 'shimmer 1.6s linear infinite',
+              }}
+            />
+          ))}
+        </div>
+
+        <div
+          style={{
+            padding: '22px 18px',
+            borderRadius: theme.borderRadius,
+            backgroundColor: theme.colors.muted,
+            border: `1px dashed ${theme.colors.border}`,
+            textAlign: 'center',
+          }}
+        >
+          <div style={{ fontSize: 26, marginBottom: 10, color: theme.colors.accent }}>◌</div>
+          <div style={{ fontSize: 14, fontWeight: 600, color: theme.colors.foreground, marginBottom: 6 }}>No saved comparisons yet</div>
+          <div style={{ fontSize: 12, color: theme.colors.secondary, lineHeight: 1.6, marginBottom: 14 }}>
+            Empty states matter just as much as the fully populated UI.
+          </div>
+          <button
+            style={{
+              padding: '8px 14px',
+              borderRadius: theme.borderRadius,
+              border: 'none',
+              backgroundColor: theme.colors.primary,
+              color: theme.colors.background,
+              fontSize: 12,
+              fontWeight: 600,
+            }}
+          >
+            Create first view
+          </button>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+function MotionAndSymbols({ theme }: { theme: ThemePreset }) {
+  const symbols = ['△', '○', '□', '✕', '+', '◉'];
+  const typedLabel = theme.name;
+  const typewriterVars = {
+    ['--type-width' as string]: `${typedLabel.length}ch`,
+  } as React.CSSProperties;
+
+  return (
+    <Section title="Motion & Symbols" theme={theme}>
+      <Subheading theme={theme}>Headline Motion</Subheading>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16, marginBottom: 32 }}>
+        <div
+          style={{
+            padding: 18,
+            borderRadius: theme.borderRadius,
+            backgroundColor: theme.colors.muted,
+            border: `1px solid ${theme.colors.border}`,
+          }}
+        >
+          <div
+            style={{
+              ...typewriterVars,
+              width: 'var(--type-width)',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              borderRight: `2px solid ${theme.colors.primary}`,
+              fontFamily: `'${theme.fonts.heading}', sans-serif`,
+              fontSize: 28,
+              color: theme.colors.foreground,
+              marginBottom: 12,
+              animation: `typing 2.4s steps(${typedLabel.length}, end) 1 both, caretBlink 0.9s step-end infinite`,
+            }}
+          >
+            {typedLabel}
+          </div>
+          <div style={{ position: 'relative', display: 'inline-flex', color: theme.colors.primary, fontSize: 13, fontWeight: 600 }}>
+            Explore editorial layouts
+            <span
+              style={{
+                position: 'absolute',
+                left: 0,
+                bottom: -4,
+                width: '100%',
+                height: 1,
+                background: `linear-gradient(90deg, ${theme.colors.primary}, ${theme.colors.accent})`,
+                transformOrigin: 'left',
+                animation: 'underlineSweep 2.4s ease-in-out infinite',
+              }}
+            />
+          </div>
+        </div>
+
+        <div
+          style={{
+            padding: 18,
+            borderRadius: theme.borderRadius,
+            background: `linear-gradient(135deg, ${theme.colors.primary}18, ${theme.colors.accent}10 55%, ${theme.colors.background})`,
+            border: `1px solid ${theme.colors.border}`,
+            boxShadow: theme.shadow,
+          }}
+        >
+          <div style={{ fontSize: 11, color: theme.colors.secondary, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>Spotlight panel</div>
+          <div style={{ fontSize: 16, fontWeight: 700, color: theme.colors.foreground, marginBottom: 6, fontFamily: `'${theme.fonts.heading}', sans-serif` }}>
+            Featured {theme.name} layout
+          </div>
+          <div style={{ fontSize: 12, color: theme.colors.secondary, lineHeight: 1.6, marginBottom: 14 }}>
+            Use this for a launch promo, hero callout, featured article, or campaign message.
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <span style={{ padding: '4px 10px', borderRadius: 9999, backgroundColor: `${theme.colors.primary}20`, color: theme.colors.primary, fontSize: 11, fontWeight: 600 }}>
+                New release
+              </span>
+              <span style={{ padding: '4px 10px', borderRadius: 9999, backgroundColor: `${theme.colors.accent}20`, color: theme.colors.accent, fontSize: 11, fontWeight: 600 }}>
+                12 min read
+              </span>
+            </div>
+            <span style={{ color: theme.colors.foreground, fontSize: 12, fontWeight: 600 }}>Read story →</span>
+          </div>
+        </div>
+      </div>
+
+      <Subheading theme={theme}>Loaders</Subheading>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginBottom: 32 }}>
+        <div style={{ padding: 18, borderRadius: theme.borderRadius, backgroundColor: theme.colors.muted, border: `1px solid ${theme.colors.border}`, minWidth: 120, display: 'grid', placeItems: 'center', gap: 10 }}>
+          <div style={{ width: 26, height: 26, border: `2px solid ${theme.colors.border}`, borderTopColor: theme.colors.primary, borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+          <span style={{ fontSize: 11, color: theme.colors.secondary }}>Circle</span>
+        </div>
+
+        <div style={{ padding: 18, borderRadius: theme.borderRadius, backgroundColor: theme.colors.muted, border: `1px solid ${theme.colors.border}`, minWidth: 120, display: 'grid', placeItems: 'center', gap: 10 }}>
+          <div style={{ width: 24, height: 24, clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', background: `linear-gradient(180deg, ${theme.colors.accent}, ${theme.colors.primary})`, animation: 'pulseFloat 1.2s ease-in-out infinite' }} />
+          <span style={{ fontSize: 11, color: theme.colors.secondary }}>Triangle</span>
+        </div>
+
+        <div style={{ padding: 18, borderRadius: theme.borderRadius, backgroundColor: theme.colors.muted, border: `1px solid ${theme.colors.border}`, minWidth: 180 }}>
+          <div style={{ width: '100%', height: 8, borderRadius: 9999, backgroundColor: `${theme.colors.border}90`, overflow: 'hidden', marginBottom: 10 }}>
+            <div
+              style={{
+                width: '45%',
+                height: '100%',
+                borderRadius: 9999,
+                background: `linear-gradient(90deg, ${theme.colors.primary}, ${theme.colors.accent})`,
+                animation: 'warmSweep 1.7s ease-in-out infinite',
+              }}
+            />
+          </div>
+          <span style={{ fontSize: 11, color: theme.colors.secondary }}>Loading bar</span>
+        </div>
+      </div>
+
+      <Subheading theme={theme}>Symbols & Terminal</Subheading>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+          {symbols.map((symbol, index) => (
+            <div
+              key={symbol}
+              style={{
+                padding: '16px 0',
+                borderRadius: theme.borderRadius,
+                backgroundColor: theme.colors.muted,
+                border: `1px solid ${theme.colors.border}`,
+                textAlign: 'center',
+                color: [theme.colors.primary, theme.colors.accent, theme.colors.secondary][index % 3],
+                fontSize: 24,
+                fontWeight: 700,
+              }}
+            >
+              {symbol}
+            </div>
+          ))}
+        </div>
+
+        <div
+          style={{
+            padding: 18,
+            borderRadius: theme.borderRadius,
+            backgroundColor: theme.colors.background,
+            border: `1px solid ${theme.colors.border}`,
+            fontFamily: 'monospace',
+            fontSize: 12,
+          }}
+        >
+          <div style={{ color: theme.colors.secondary, marginBottom: 8 }}>$ preview {theme.id}</div>
+          <div style={{ color: theme.colors.foreground, marginBottom: 6 }}>booting visual modules...</div>
+          <div style={{ color: theme.colors.accent, marginBottom: 6 }}>loading charts · symbols · loaders</div>
+          <div style={{ color: '#4ade80' }}>
+            status: online <span style={{ animation: 'blink 1s step-end infinite' }}>▋</span>
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
 // ── Stats & Lists ────────────────────────────────────────────────────
 function StatsAndLists({ theme }: { theme: ThemePreset }) {
   return (
@@ -1092,8 +1702,36 @@ export function ThemeDetail() {
         fontFamily: `'${theme.fonts.body}', sans-serif`,
       }}
     >
-      {/* Spinner keyframes */}
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      {/* Animation keyframes */}
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes shimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+        @keyframes blink {
+          50% { opacity: 0; }
+        }
+        @keyframes typing {
+          from { width: 0; }
+          to { width: var(--type-width); }
+        }
+        @keyframes caretBlink {
+          50% { border-color: transparent; }
+        }
+        @keyframes warmSweep {
+          0%, 100% { transform: translateX(-20%); opacity: 0.7; }
+          50% { transform: translateX(90%); opacity: 1; }
+        }
+        @keyframes pulseFloat {
+          0%, 100% { transform: translateY(0) scale(1); opacity: 0.9; }
+          50% { transform: translateY(-4px) scale(1.05); opacity: 1; }
+        }
+        @keyframes underlineSweep {
+          0%, 100% { transform: scaleX(0.35); opacity: 0.5; }
+          50% { transform: scaleX(1); opacity: 1; }
+        }
+      `}</style>
 
       <div style={{ maxWidth: 900, margin: '0 auto', padding: 'clamp(24px, 4vw, 80px)' }}>
         {/* Navigation */}
@@ -1179,6 +1817,9 @@ export function ThemeDetail() {
         <Typography theme={theme} />
         <ComponentShowcase theme={theme} />
         <GradientsEffects theme={theme} />
+        <VisualShowcase theme={theme} />
+        <ModernWebEssentials theme={theme} />
+        <MotionAndSymbols theme={theme} />
         <StatsAndLists theme={theme} />
         <TokenReference theme={theme} />
 
