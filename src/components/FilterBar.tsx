@@ -1,6 +1,5 @@
 import * as ToggleGroup from '@radix-ui/react-toggle-group';
-import type { ThemeCategory } from '../types/theme';
-import type { ThemePreset } from '../types/theme';
+import type { ThemeCategory, ThemePreset } from "../types/theme";
 
 interface FilterBarProps {
   selectedCategories: ThemeCategory[];
