@@ -1,40 +1,34 @@
 # CSS Gallery
 
-A modern CSS gallery built with Next.js, React, and Tailwind CSS. This visually appealing gallery should be used as a reference for CSS techniques and design inspiration. It features a clean and responsive layout, smooth animations, and a curated collection of CSS examples.
+A gallery of ready-made UI theme presets for visual reference and design inspiration. Each theme defines a color palette, heading and body fonts, border radius, and shadow, and the gallery shows it applied to real interface components.
 
-<img width="1471" height="963" alt="image" src="https://github.com/user-attachments/assets/a9cd4c80-0ba8-4937-9f09-dcb1ec5e66c8" />
+<img width="1471" height="963" alt="CSS Gallery screenshot" src="https://github.com/user-attachments/assets/a9cd4c80-0ba8-4937-9f09-dcb1ec5e66c8" />
 
-## Tech Stack
+## Features
 
-### Core
+- **44 theme presets**, each with its own palette, fonts, radius, and shadow.
+- **Category filter**: Light, Dark, Colorful, Minimal, and Brutalist.
+- **Theme detail pages** (`/theme/:id`) that render the theme on sample components: meters, donut, pie and bar charts, tables and logs, alerts and toasts, tabs, toggles, avatars, skeleton and empty states, headline motion, and more.
+- **One-click copy** for individual colors, the theme as CSS custom properties, or the theme as JSON.
 
-![Next.js](https://img.shields.io/badge/Next.js-16.1.6-000000?style=flat-square&logo=next.js&logoColor=white)
-![React](https://img.shields.io/badge/React-19.2.4-61DAFB?style=flat-square&logo=react&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat-square&logo=typescript&logoColor=white)
+## Stack
 
-### Styling
+React 19, TypeScript, Vite, React Router, Tailwind CSS v4, Radix UI (dialog, toggle group, tooltip), and Framer Motion.
 
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.19-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.34.0-0055FF?style=flat-square&logo=framer&logoColor=white)
+## Development
 
-### UI Components
+```bash
+npm install
+npm run dev      # start the dev server
+npm run lint     # ESLint
+npm run build    # type-check and build to dist/
+npm run preview  # serve the production build
+```
 
-![Lucide](https://img.shields.io/badge/Lucide_React-0.563.0-F56565?style=flat-square&logo=lucide&logoColor=white)
+## Adding a theme
 
-### Dependencies
+Themes live in `src/data/themes.ts` and follow the `ThemePreset` type in `src/types/theme.ts`. Add an entry with a unique `id`, a `category`, the seven palette colors (`background`, `foreground`, `primary`, `secondary`, `accent`, `muted`, `border`), `fonts`, `borderRadius`, and `shadow`. The grid, filter counts, and detail page pick it up automatically.
 
-| Package | Version | Description |
-|---------|---------|-------------|
-| `next` | 16.1.6 | React framework (App Router) |
-| `react` | 19.2.4 | UI framework |
-| `react-dom` | 19.2.4 | React DOM renderer |
-| `typescript` | 5.0+ | Type safety |
-| `tailwindcss` | 3.4.19 | Utility-first CSS |
-| `framer-motion` | 12.34.0 | Animation library |
-| `lucide-react` | 0.563.0 | Icon library |
-| `clsx` | 2.1.1 | Class name utility |
-| `eslint` | 9.x | Code linting |
-| `postcss` | 8.x | CSS processor |
-| `autoprefixer` | 10.x | CSS autoprefixer |
+## Deployment
 
----
+The site is deployed on Vercel. `vercel.json` rewrites all paths to the SPA entry point and sets security headers, including a Content Security Policy.
